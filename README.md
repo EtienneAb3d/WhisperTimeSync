@@ -39,25 +39,30 @@ Output (data/KatyPerry-Firework.txt.srt):
 ==========
 1
 00:00:00,000 --> 00:00:18,020
-Lyrics: Do you ever feel Like a plastic bag
+Lyrics:
+Do you ever feel
+Like a plastic bag
 
 2
 00:00:18,020 --> 00:00:22,140
-Drifting through the wind Wanting to start again
+Drifting through the wind
+Wanting to start again
 
 3
 00:00:22,140 --> 00:00:25,440
-Do you ever feel Feel so paper-thin
+Do you ever feel
+Feel so paper-thin
 
 4
 00:00:25,440 --> 00:00:29,640
-Like a house of cards One blow from caving in
+Like a house of cards
+One blow from caving in
 
 5
 00:00:29,640 --> 00:00:33,400
-Do you ever feel Already buried deep
+Do you ever feel
+Already buried deep
 
-6
 [...]
 ==========
 ```
