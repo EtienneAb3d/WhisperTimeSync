@@ -1,2 +1,2 @@
 # WhisperTimeSync
-Sync Whisper's timestamps over an existing accurate transcription
+Synchronize Whisper's timestamps over an existing accurate transcription
