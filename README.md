@@ -35,7 +35,7 @@ Saving: data/KatyPerry-Firework.mp3.srt ...
 ```
 java -jar distrib/WhisperTimeSync.jar data/KatyPerry-Firework.mp3.srt data/KatyPerry-Firework.txt
 
-Output (KatyPerry-Firework.txt.srt):
+Output (data/KatyPerry-Firework.txt.srt):
 ==========
 1
 00:00:00,000 --> 00:00:18,020
