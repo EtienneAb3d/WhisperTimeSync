@@ -28,7 +28,8 @@ public class WhisperTimeSync {
 		return aSB.toString()
 				.replaceAll("([0-9]+)\n([0-9]+:[0-9]+:[0-9]+,[0-9]+ --&gt; [0-9]+:[0-9]+:[0-9]+,[0-9]+)\n"
 				, "<time id='$1' stamp='$2'/>")
-				.replaceAll("[ \n]+", " ");
+				.replaceAll("[ ]+", " ")
+				.replaceAll("[\n]+", "\n");
 	}
 	
 	void process(String aPathSRT,String aPathTxt) throws Exception {
@@ -38,8 +39,8 @@ public class WhisperTimeSync {
 		System.out.println("TXT: "+aTxtXml);
 		
 		TokenizerSimple aTokenizer = new TokenizerSimple();
-		TokenizedSent aSrtTS = aTokenizer.tokenizeXmlSimple(aSrtXml," "); 
-		TokenizedSent aTxtTS = aTokenizer.tokenizeXmlSimple(aTxtXml," ");
+		TokenizedSent aSrtTS = aTokenizer.tokenizeXmlSimple(aSrtXml,"[ \n]"); 
+		TokenizedSent aTxtTS = aTokenizer.tokenizeXmlSimple(aTxtXml,"[ \n]");
 		
 		CubaixAlignerSimple aAligner = new CubaixAlignerSimple();
 		TokenizedSent aSyncTS = aAligner.syncMarks1to2(aSrtTS, aTxtTS);
@@ -48,7 +49,8 @@ public class WhisperTimeSync {
 				new OutputStreamWriter(new FileOutputStream(aPathTxt+".srt")
 				,"UTF8"));
 		
-		System.out.println("Output ("+aPathTxt+".srt"+ "):");
+		System.out.println("\n"
+				+ "Output ("+aPathTxt+".srt"+ "):");
 		
 		StringBuffer aWaiting = new StringBuffer();
 		for(Token aT : aSyncTS.tokens) {
