@@ -19,7 +19,7 @@ sudo apt update && sudo apt install ffmpeg
 # Transcribe
 
 ```
-python transcribeExample.py 
+python3 transcribe.py data/KatyPerry-Firework.mp3 large
 
 Output:
 ==========
