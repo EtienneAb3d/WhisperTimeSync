@@ -1,6 +1,10 @@
 # WhisperTimeSync
 Synchronize Whisper's timestamps over an existing accurate transcription
 
+# Google Colab
+
+https://colab.research.google.com/drive/10r4m_GaTwU-JQMkRe9T0cvgrfQH1le31?usp=sharing
+
 # Install
 
 ```
