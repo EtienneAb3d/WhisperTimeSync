@@ -3,7 +3,7 @@ package com.cubAIx.WhisperTimeSync;
 import java.util.Vector;
 
 public class CubaixAlignerSimple {
-	static final boolean _DEBUG = false;
+	static final boolean _DEBUG = true;
 
 	static double COST_INCREDIBLE = 1000000;
 	
@@ -17,6 +17,13 @@ public class CubaixAlignerSimple {
 		TokenizedSent aFused = new TokenizedSent(null);
 		for(int p = 0;p < aP12s.size();p++) {
 			Pair aP12 = aP12s.elementAt(p);
+			if(_DEBUG) {
+				System.out.println(
+						(aP12.t1 == null ? "[✘]" : "["+aP12.t1.token.replaceAll("[\n\r]", "\\\\n")+"]"+aP12.t1.kind)
+								+ "\t" + (aP12.t1 == null || aP12.t2 == null || !aP12.t1.token.equals(aP12.t2.token) ? "≠":"=") + "\t"
+								+(aP12.t2 == null ? "[✘]" : "["+aP12.t2.token.replaceAll("[\n\r]", "\\\\n")+"]"+aP12.t2.kind)
+						);
+			}
 			if(aP12.t1 != null && aP12.t1.kind == Token.NSTOKEN_KIND.MARK) {
 				aFused.tokens.add(aP12.t1);
 			}
@@ -42,8 +49,8 @@ public class CubaixAlignerSimple {
 			for(int y = 1;y<aTS2.tokens.size()+1;y++) {
 				double aCost = cost(aTS1.tokens.elementAt(x-1),aTS2.tokens.elementAt(y-1));
 				double aCost0 = aCosts[x-1][y-1]+aCost*0.99;
-				double aCost1 = aCosts[x-1][y]+1;
-				double aCost2 = aCosts[x][y-1]+1;
+				double aCost1 = aCosts[x-1][y]+cost(aTS1.tokens.elementAt(x-1));
+				double aCost2 = aCosts[x][y-1]+cost(aTS2.tokens.elementAt(y-1));
 				if(aCost0 <= aCost1 && aCost0 <= aCost2) {
 					aChoices[x][y] = 0;
 					aCosts[x][y] = aCost0;
@@ -97,10 +104,24 @@ public class CubaixAlignerSimple {
 		if(aT1.token.equalsIgnoreCase(aT2.token)) {
 			return 0.01;
 		}
-		if(aT1.token.startsWith(aT2.token) || aT1.token.endsWith(aT2.token)
-				|| aT2.token.startsWith(aT1.token) || aT2.token.endsWith(aT1.token)) {//Segmentation problem ?
+		if(aT1.token.trim().equalsIgnoreCase(aT2.token.trim())) {
+			return 0.02;
+		}
+		if(aT1.token.toLowerCase().startsWith(aT2.token.toLowerCase())
+				|| aT1.token.toLowerCase().endsWith(aT2.token.toLowerCase())
+				|| aT2.token.toLowerCase().startsWith(aT1.token.toLowerCase())
+				|| aT2.token.toLowerCase().endsWith(aT1.token.toLowerCase())) {//Segmentation problem ?
 			return 1.0 - 2.0*Math.min(aT1.token.length(),aT2.token.length())/(double)(aT1.token.length()+aT2.token.length());
 		}
 		return 2.0 - 2.0*Math.min(aT1.token.length(),aT2.token.length())/(double)(aT1.token.length()+aT2.token.length());
 	}
+	
+	double cost(Token aT) {
+		if(aT.token.trim().length() == 0) {
+			//Blank
+			return 0.1;
+		}
+		return 1.0;
+	}
+
 }
