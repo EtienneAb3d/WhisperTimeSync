@@ -34,9 +34,9 @@ public class WhisperTimeSync {
 	
 	void process(String aPathSRT,String aPathTxt) throws Exception {
 		String aSrtXml = load(aPathSRT);
-		System.out.println("SRT: "+aSrtXml);
+		System.out.println("\nSRT: \n"+aSrtXml);
 		String aTxtXml = load(aPathTxt);
-		System.out.println("TXT: "+aTxtXml);
+		System.out.println("\nTXT: \n"+aTxtXml);
 		
 		TokenizerSimple aTokenizer = new TokenizerSimple();
 		TokenizedSent aSrtTS = aTokenizer.tokenizeXmlSimple(aSrtXml,"[ \n]"); 

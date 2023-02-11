@@ -15,6 +15,9 @@ public class CubaixAlignerSimple {
 	TokenizedSent syncMarks1to2(TokenizedSent aTS1,TokenizedSent aTS2) throws Exception {
 		Vector<Pair> aP12s = align(aTS1, aTS2);
 		TokenizedSent aFused = new TokenizedSent(null);
+		if(_DEBUG) {
+			System.out.println("\nSYNC: \n");
+		}
 		for(int p = 0;p < aP12s.size();p++) {
 			Pair aP12 = aP12s.elementAt(p);
 			if(_DEBUG) {
