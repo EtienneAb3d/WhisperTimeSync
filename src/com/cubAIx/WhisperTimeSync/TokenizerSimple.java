@@ -42,7 +42,7 @@ public class TokenizerSimple {
 			StringTokenizer aTokenizer = new StringTokenizer(aP,aSeparatorChars,true);
 			while(aTokenizer.hasMoreTokens()) {
 				String aTok =  (String)aTokenizer.nextElement();
-				if(aTok.length() == 1 && PUNCT_ONLY_STRING_RE.indexOf(aTok.charAt(0)) >= 0) {
+				if(aTok.matches(PUNCT_ONLY_STRING_RE)) {
 					Token aT = new Token();
 					aT.token = aTok;
 					aT.kind = Token.NSTOKEN_KIND.PUNCT;
