@@ -32,15 +32,17 @@ public class WhisperTimeSync {
 				.replaceAll("[\n]+", "\n");
 	}
 	
-	void process(String aPathSRT,String aPathTxt) throws Exception {
+	void process(String aPathSRT,String aPathTxt,String aLng) throws Exception {
 		String aSrtXml = load(aPathSRT);
 		System.out.println("\nSRT: \n"+aSrtXml);
 		String aTxtXml = load(aPathTxt);
 		System.out.println("\nTXT: \n"+aTxtXml);
 		
+		String aCutOnRE = aLng.matches("(ja|zh|ko)")?null:"[ \n]";
+		
 		TokenizerSimple aTokenizer = new TokenizerSimple();
-		TokenizedSent aSrtTS = aTokenizer.tokenizeXmlSimple(aSrtXml,"[ \n]"); 
-		TokenizedSent aTxtTS = aTokenizer.tokenizeXmlSimple(aTxtXml,"[ \n]");
+		TokenizedSent aSrtTS = aTokenizer.tokenizeXmlSimple(aSrtXml,aCutOnRE); 
+		TokenizedSent aTxtTS = aTokenizer.tokenizeXmlSimple(aTxtXml,aCutOnRE);
 		
 		CubaixAlignerSimple aAligner = new CubaixAlignerSimple();
 		TokenizedSent aSyncTS = aAligner.syncMarks1to2(aSrtTS, aTxtTS);
@@ -86,7 +88,7 @@ public class WhisperTimeSync {
 	
 	public static void main(String[] args) {
 		try {
-			new WhisperTimeSync().process(args[0], args[1]);
+			new WhisperTimeSync().process(args[0], args[1], args[2]);
 			
 		} catch (Exception e) {
 			e.printStackTrace(System.err);

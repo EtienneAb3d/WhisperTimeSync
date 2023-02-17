@@ -39,24 +39,47 @@ public class TokenizerSimple {
 				aTokPos++;
 				continue;
 			}
-			StringTokenizer aTokenizer = new StringTokenizer(aP,aSeparatorChars,true);
-			while(aTokenizer.hasMoreTokens()) {
-				String aTok =  (String)aTokenizer.nextElement();
-				if(aTok.matches(PUNCT_ONLY_STRING_RE)) {
-					Token aT = new Token();
-					aT.token = aTok;
-					aT.kind = Token.NSTOKEN_KIND.PUNCT;
-					aTS.tokens.add(aT);
-					aTokPos++;
-					continue;
+			if(aSeparatorChars == null) {
+				for(char aC : aP.toCharArray()) {
+					String aTok = ""+aC;
+					if(aTok.matches(PUNCT_ONLY_STRING_RE)) {
+						Token aT = new Token();
+						aT.token = aTok;
+						aT.kind = Token.NSTOKEN_KIND.PUNCT;
+						aTS.tokens.add(aT);
+						aTokPos++;
+						continue;
+					}
+					else {
+						Token aT = new Token();
+						aT.token = aTok;
+						aT.kind = Token.NSTOKEN_KIND.WORD;
+						aTS.tokens.add(aT);
+						aTokPos++;
+						continue;
+					}
 				}
-				else {
-					Token aT = new Token();
-					aT.token = aTok;
-					aT.kind = Token.NSTOKEN_KIND.WORD;
-					aTS.tokens.add(aT);
-					aTokPos++;
-					continue;
+			}
+			else{
+				StringTokenizer aTokenizer = new StringTokenizer(aP,aSeparatorChars,true);
+				while(aTokenizer.hasMoreTokens()) {
+					String aTok =  (String)aTokenizer.nextElement();
+					if(aTok.matches(PUNCT_ONLY_STRING_RE)) {
+						Token aT = new Token();
+						aT.token = aTok;
+						aT.kind = Token.NSTOKEN_KIND.PUNCT;
+						aTS.tokens.add(aT);
+						aTokPos++;
+						continue;
+					}
+					else {
+						Token aT = new Token();
+						aT.token = aTok;
+						aT.kind = Token.NSTOKEN_KIND.WORD;
+						aTS.tokens.add(aT);
+						aTokPos++;
+						continue;
+					}
 				}
 			}
 		}
