@@ -3,7 +3,7 @@ Synchronize Whisper's timestamps over an existing accurate transcription
 
 # Complement
 
-More "accurate transcriptions" may be obtained using WhisperHallu:<br/>
+The "accurate transcriptions" may be obtained using WhisperHallu:<br/>
 https://github.com/EtienneAb3d/WhisperHallu
 
 # Google Colab
