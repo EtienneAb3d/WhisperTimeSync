@@ -78,7 +78,7 @@ Already buried deep
 
 # Remarks
 
-- To be able to also process Asian languages, an improvement has to be done on the tokenizer.
+- Asian languages are process char by char, an improvement may be done on the tokenizer in order to process word by word.
 - For large files, this aligner will be very time-consuming and RAM-consuming. 
 
 I have an other aligner being able to align Asian languages and large files. It is also able to do cross-lingual alignments. But, I won't release it as open-source. If someone is interested, contact me. 
