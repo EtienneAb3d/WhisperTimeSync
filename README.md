@@ -42,7 +42,7 @@ Saving: data/KatyPerry-Firework.mp3.srt ...
 # Synchronize
 
 ```
-java -jar distrib/WhisperTimeSync.jar data/KatyPerry-Firework.mp3.srt data/KatyPerry-Firework.txt en
+java -Xmx2G -jar distrib/WhisperTimeSync.jar data/KatyPerry-Firework.mp3.srt data/KatyPerry-Firework.txt en
 
 Output (data/KatyPerry-Firework.txt.srt):
 ==========
