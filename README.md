@@ -81,6 +81,10 @@ Already buried deep
 - Asian languages are processed char by char. An improvement may be done on the tokenizer in order to process them word by word.
 - For large files, this aligner will be very time-consuming and RAM-consuming. 
 
-I have an other aligner being able to align Asian languages and large files. It is also able to do cross-lingual alignments. But, I won't release it as open-source. If someone is interested, contact me. 
+I have an other aligner being able to align Asian languages and large files. It is also able to do cross-lingual alignments. But, I won't release it as open-source. It is included in the **ComPair** Freeware: an universal cross-ligual document comparer. 
+
+See here: http://cubaix.com/ComPair_QuickStartGuide.php
+
+If someone is interested for a commercial use, contact me. 
 
 See https://cubaix.com
