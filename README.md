@@ -83,7 +83,7 @@ Already buried deep
 
 I have an other aligner being able to align Asian languages and large files. It is also able to do cross-lingual alignments. But, I won't release it as open-source. It is included in the **ComPair** Freeware: an universal cross-ligual document comparer. 
 
-See here: http://cubaix.com/ComPair_QuickStartGuide.php
+See: http://cubaix.com/ComPair_QuickStartGuide.php
 
 If someone is interested for a commercial use, contact me. 
 
