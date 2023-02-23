@@ -87,4 +87,4 @@ See here: http://cubaix.com/ComPair_QuickStartGuide.php
 
 If someone is interested for a commercial use, contact me. 
 
-See https://cubaix.com
+See: https://cubaix.com
