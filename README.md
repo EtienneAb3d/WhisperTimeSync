@@ -88,6 +88,5 @@ I have an other aligner being able to align Asian languages and large files. It 
 
 See: http://cubaix.com/ComPair_QuickStartGuide.php
 
-If you are interested in a commercial/industrial project, contact me. 
-
-See: https://cubaix.com
+If you are interested in a commercial/industrial linguistic project, contact us:<br/>
+https://cubaix.com
