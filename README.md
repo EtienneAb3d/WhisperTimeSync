@@ -6,6 +6,9 @@ Synchronize Whisper's timestamps over an existing accurate transcription
 The "accurate transcriptions" may be obtained using WhisperHallu:<br/>
 https://github.com/EtienneAb3d/WhisperHallu
 
+WhisperHallu is used to extract vocals and lyrics in karaok-AI:<br/>
+https://github.com/EtienneAb3d/karaok-AI
+
 # Google Colab
 
 https://colab.research.google.com/drive/10r4m_GaTwU-JQMkRe9T0cvgrfQH1le31?usp=sharing
