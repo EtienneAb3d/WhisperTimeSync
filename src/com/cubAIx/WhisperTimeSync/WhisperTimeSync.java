@@ -22,38 +22,50 @@ public class WhisperTimeSync {
 			if(aSB.length() > 0) {
 				aSB.append("\n");
 			}
-			aSB.append(aLine.replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
+			aSB.append(aLine);
 		}
 		aBR.close();
-		return aSB.toString()
-				.replaceAll("([0-9]+)\n([0-9]+:[0-9]+:[0-9]+,[0-9]+ --&gt; [0-9]+:[0-9]+:[0-9]+,[0-9]+)\n"
+		return aSB.toString();
+	}
+	
+	String toXml(String aSrt) {
+		return aSrt.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+				.replaceAll("([0-9]+)\n([0-9]+:[0-9]+:[0-9]+[,.][0-9]+ --&gt; [0-9]+:[0-9]+:[0-9]+[,.][0-9]+)\n"
 				, "<time id='$1' stamp='$2'/>")
 				.replaceAll("[ ]+", " ")
 				.replaceAll("[\n]+", "\n");
 	}
 	
-	void process(String aPathSRT,String aPathTxt,String aLng) throws Exception {
-		String aSrtXml = load(aPathSRT);
-		System.out.println("\nSRT: \n"+aSrtXml);
-		String aTxtXml = load(aPathTxt);
-		System.out.println("\nTXT: \n"+aTxtXml);
-		
-		String aCutOnRE = aLng.matches("(ja|zh|ko)")?null:"[ \n]";
-		
-		TokenizerSimple aTokenizer = new TokenizerSimple();
-		TokenizedSent aSrtTS = aTokenizer.tokenizeXmlSimple(aSrtXml,aCutOnRE); 
-		TokenizedSent aTxtTS = aTokenizer.tokenizeXmlSimple(aTxtXml,aCutOnRE);
-		
-		CubaixAlignerSimple aAligner = new CubaixAlignerSimple();
-		TokenizedSent aSyncTS = aAligner.syncMarks1to2(aSrtTS, aTxtTS);
-		
+	public void processFile(String aPathSRT,String aPathTxt,String aLng) throws Exception {
+		String aSrt = load(aPathSRT);
+		String aTxt = load(aPathTxt);
+		String aOut = processString(aSrt,aTxt,aLng);
+		System.out.println("\n"
+				+ "Output ("+aPathTxt+".srt"+ "):");
 		BufferedWriter aBW = new BufferedWriter(
 				new OutputStreamWriter(new FileOutputStream(aPathTxt+".srt")
 				,"UTF8"));
+		aBW.write(aOut);
+		aBW.flush();
+		aBW.close();
+	}
 		
-		System.out.println("\n"
-				+ "Output ("+aPathTxt+".srt"+ "):");
-		
+	public String processString(String aSRT,String aTxt,String aLng) throws Exception {
+		String aSrtXml = toXml(aSRT);
+		String aTxtXml = toXml(aTxt);
+		System.out.println("\nSRT: \n"+aSrtXml);
+		System.out.println("\nTXT: \n"+aTxtXml);
+
+		String aCutOnRE = aLng.matches("(ja|zh|ko)")?null:"[ \n]";
+
+		TokenizerSimple aTokenizer = new TokenizerSimple();
+		TokenizedSent aSrtTS = aTokenizer.tokenizeXmlSimple(aSrtXml,aCutOnRE); 
+		TokenizedSent aTxtTS = aTokenizer.tokenizeXmlSimple(aTxtXml,aCutOnRE);
+
+		CubaixAlignerSimple aAligner = new CubaixAlignerSimple();
+		TokenizedSent aSyncTS = aAligner.syncMarks1to2(aSrtTS, aTxtTS);
+
+		StringBuffer aOut = new StringBuffer();
 		StringBuffer aWaiting = new StringBuffer();
 		for(Token aT : aSyncTS.tokens) {
 			if(aT.kind == Token.NSTOKEN_KIND.MARK) {
@@ -64,11 +76,11 @@ public class WhisperTimeSync {
 							.replaceAll("&lt;", "<")
 							.replaceAll("&gt;", ">")
 							.trim()+"\n\n";
-					aBW.write(aPhrase);
+					aOut.append(aPhrase);
 					System.out.print(aPhrase);
 					aWaiting = new StringBuffer();
 				}
-				aBW.write(aId+"\n"+aStamp+"\n");
+				aOut.append(aId+"\n"+aStamp+"\n");
 				System.out.print(aId+"\n"+aStamp+"\n");
 				continue;
 			}
@@ -79,17 +91,16 @@ public class WhisperTimeSync {
 					.replaceAll("&lt;", "<")
 					.replaceAll("&gt;", ">")
 					.trim()+"\n\n";
-			aBW.write(aPhrase);
+			aOut.append(aPhrase);
 			System.out.print(aPhrase);
-}
-		aBW.flush();
-		aBW.close();
+		}
+		
+		return aOut.toString();
 	}
 	
 	public static void main(String[] args) {
 		try {
-			new WhisperTimeSync().process(args[0], args[1], args[2]);
-			
+			new WhisperTimeSync().processFile(args[0], args[1], args[2]);
 		} catch (Exception e) {
 			e.printStackTrace(System.err);
 		}
