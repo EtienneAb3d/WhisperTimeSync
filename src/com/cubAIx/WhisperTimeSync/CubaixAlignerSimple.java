@@ -3,7 +3,7 @@ package com.cubAIx.WhisperTimeSync;
 import java.util.Vector;
 
 public class CubaixAlignerSimple {
-	static final boolean _DEBUG = true;
+	static final boolean _DEBUG = false;
 
 	static double COST_INCREDIBLE = 1000000;
 	
@@ -22,9 +22,9 @@ public class CubaixAlignerSimple {
 			Pair aP12 = aP12s.elementAt(p);
 			if(_DEBUG) {
 				System.out.println(
-						(aP12.t1 == null ? "[✘]" : "["+aP12.t1.token.replaceAll("[\n\r]", "\\\\n")+"]"+aP12.t1.kind)
+						(aP12.t1 == null ? "[✘]" : "["+aP12.t1.token.replaceAll("\r*\n", "\\\\n")+"]"+aP12.t1.kind)
 								+ "\t" + (aP12.t1 == null || aP12.t2 == null || !aP12.t1.token.equals(aP12.t2.token) ? "≠":"=") + "\t"
-								+(aP12.t2 == null ? "[✘]" : "["+aP12.t2.token.replaceAll("[\n\r]", "\\\\n")+"]"+aP12.t2.kind)
+								+(aP12.t2 == null ? "[✘]" : "["+aP12.t2.token.replaceAll("\r*\n", "\\\\n")+"]"+aP12.t2.kind)
 						);
 			}
 			if(aP12.t1 != null && aP12.t1.kind == Token.NSTOKEN_KIND.MARK) {

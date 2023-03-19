@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class WhisperTimeSync {
+	static final boolean _DEBUG_INOUT = false;
+	static final boolean _DEBUG_ALIGN = false;
 
 	public WhisperTimeSync() {
 	}
@@ -29,9 +31,12 @@ public class WhisperTimeSync {
 	}
 	
 	String toXml(String aSrt) {
-		return aSrt.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
-				.replaceAll("([0-9]+)\n([0-9]+:[0-9]+:[0-9]+[,.][0-9]+ --&gt; [0-9]+:[0-9]+:[0-9]+[,.][0-9]+)\n"
-				, "<time id='$1' stamp='$2'/>")
+		return ("\n"+aSrt.replaceAll("\r*\n", "\n"))
+				.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
+				.replaceAll("\n([0-9]+)\n([0-9]+:[0-9]+:[0-9]+[,.][0-9]+ --&gt; [0-9]+:[0-9]+:[0-9]+[,.][0-9]+)\n"
+						, "<time id='$1' stamp='$2'/>")
+				.replaceAll("\n([0-9]+:[0-9]+:[0-9]+[,.][0-9]+ --&gt; [0-9]+:[0-9]+:[0-9]+[,.][0-9]+)\n"
+						, "<time id='' stamp='$1'/>")
 				.replaceAll("[ ]+", " ")
 				.replaceAll("[\n]+", "\n");
 	}
@@ -51,10 +56,16 @@ public class WhisperTimeSync {
 	}
 		
 	public String processString(String aSRT,String aTxt,String aLng) throws Exception {
+		if(_DEBUG_INOUT) {
+			System.out.println("\nSRT: \n"+aSRT);
+			System.out.println("\nTXT: \n"+aTxt);
+		}
 		String aSrtXml = toXml(aSRT);
 		String aTxtXml = toXml(aTxt);
-		System.out.println("\nSRT: \n"+aSrtXml);
-		System.out.println("\nTXT: \n"+aTxtXml);
+		if(_DEBUG_INOUT) {
+			System.out.println("\nSRTXML: \n"+aSrtXml);
+			System.out.println("\nTXTXML: \n"+aTxtXml);
+		}
 
 		String aCutOnRE = aLng.matches("(ja|zh|ko)")?null:"[ \n]";
 
@@ -77,11 +88,15 @@ public class WhisperTimeSync {
 							.replaceAll("&gt;", ">")
 							.trim()+"\n\n";
 					aOut.append(aPhrase);
-					System.out.print(aPhrase);
+					if(_DEBUG_ALIGN) {
+						System.out.print(aPhrase);
+					}
 					aWaiting = new StringBuffer();
 				}
 				aOut.append(aId+"\n"+aStamp+"\n");
-				System.out.print(aId+"\n"+aStamp+"\n");
+				if(_DEBUG_ALIGN) {
+					System.out.print(aId+"\n"+aStamp+"\n");
+				}
 				continue;
 			}
 			aWaiting.append(aT.token);
@@ -92,7 +107,9 @@ public class WhisperTimeSync {
 					.replaceAll("&gt;", ">")
 					.trim()+"\n\n";
 			aOut.append(aPhrase);
-			System.out.print(aPhrase);
+			if(_DEBUG_ALIGN) {
+				System.out.print(aPhrase);
+			}
 		}
 		
 		return aOut.toString();
