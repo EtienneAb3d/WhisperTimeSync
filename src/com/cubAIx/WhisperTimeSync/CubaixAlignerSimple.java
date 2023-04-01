@@ -7,12 +7,7 @@ public class CubaixAlignerSimple {
 
 	static double COST_INCREDIBLE = 1000000;
 	
-	class Pair{
-		Token t1 = null;
-		Token t2 = null;
-	}
-	
-	TokenizedSent syncMarks1to2(TokenizedSent aTS1,TokenizedSent aTS2) throws Exception {
+	public TokenizedSent syncMarks1to2(TokenizedSent aTS1,TokenizedSent aTS2) throws Exception {
 		Vector<Pair> aP12s = align(aTS1, aTS2);
 		TokenizedSent aFused = new TokenizedSent(null);
 		if(_DEBUG) {
@@ -37,7 +32,7 @@ public class CubaixAlignerSimple {
 		return aFused;
 	}
 	
-	Vector<Pair> align(TokenizedSent aTS1,TokenizedSent aTS2) throws Exception {
+	public Vector<Pair> align(TokenizedSent aTS1,TokenizedSent aTS2) throws Exception {
 		int[][] aChoices = new int[aTS1.tokens.size()+1][aTS2.tokens.size()+1];
 		double[][] aCosts = new double[aTS1.tokens.size()+1][aTS2.tokens.size()+1];
 		for(int x = 0;x<aTS1.tokens.size()+1;x++) {

@@ -5,6 +5,8 @@ public class Token {
 
 	public NSTOKEN_KIND kind = NSTOKEN_KIND.UNDEF;
 	public String token = null;
+	public int charPos = -1;
+	public int tokPos = -1;
 	
 	public String getAttr(String aAttr) {
 		if(kind != NSTOKEN_KIND.MARK) {

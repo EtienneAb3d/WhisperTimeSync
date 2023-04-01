@@ -30,12 +30,16 @@ public class TokenizerSimple {
 		}
 		int aTokPos = 0;
 		String aSubTok = "";
+		aPos = 0;
 		for(String aP : aParts) {
 			if(aP.startsWith("<")) {
 				Token aT = new Token();
 				aT.token = aP;
 				aT.kind = Token.NSTOKEN_KIND.MARK;
+				aT.charPos = aPos;
+				aT.tokPos = aTokPos;
 				aTS.tokens.add(aT);
+				aPos += aT.token.length();
 				aTokPos++;
 				continue;
 			}
@@ -46,7 +50,10 @@ public class TokenizerSimple {
 						Token aT = new Token();
 						aT.token = aTok;
 						aT.kind = Token.NSTOKEN_KIND.PUNCT;
+						aT.charPos = aPos;
+						aT.tokPos = aTokPos;
 						aTS.tokens.add(aT);
+						aPos += aT.token.length();
 						aTokPos++;
 						continue;
 					}
@@ -54,7 +61,10 @@ public class TokenizerSimple {
 						Token aT = new Token();
 						aT.token = aTok;
 						aT.kind = Token.NSTOKEN_KIND.WORD;
+						aT.charPos = aPos;
+						aT.tokPos = aTokPos;
 						aTS.tokens.add(aT);
+						aPos += aT.token.length();
 						aTokPos++;
 						continue;
 					}
@@ -68,7 +78,10 @@ public class TokenizerSimple {
 						Token aT = new Token();
 						aT.token = aTok;
 						aT.kind = Token.NSTOKEN_KIND.PUNCT;
+						aT.charPos = aPos;
+						aT.tokPos = aTokPos;
 						aTS.tokens.add(aT);
+						aPos += aT.token.length();
 						aTokPos++;
 						continue;
 					}
@@ -76,7 +89,10 @@ public class TokenizerSimple {
 						Token aT = new Token();
 						aT.token = aTok;
 						aT.kind = Token.NSTOKEN_KIND.WORD;
+						aT.charPos = aPos;
+						aT.tokPos = aTokPos;
 						aTS.tokens.add(aT);
+						aPos += aT.token.length();
 						aTokPos++;
 						continue;
 					}
