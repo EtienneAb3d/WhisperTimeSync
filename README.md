@@ -1,6 +1,10 @@
 # WhisperTimeSync
 Synchronize Whisper's timestamps over an existing accurate transcription
 
+<b>Input 1:</b> SRT with good timestamps and bad-quality text<br/>
+<b>Input 2:</b> good text-only, or SRT with good text and bad timestamps<br/>
+<b>Output:</b> SRT with good text and good timestamps
+
 # Complement
 
 The "accurate transcriptions" may be obtained using WhisperHallu:<br/>
