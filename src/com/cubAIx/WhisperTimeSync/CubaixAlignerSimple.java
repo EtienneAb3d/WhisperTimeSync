@@ -25,7 +25,7 @@ public class CubaixAlignerSimple {
 			if(aP12.t1 != null && aP12.t1.kind == Token.NSTOKEN_KIND.MARK) {
 				aFused.tokens.add(aP12.t1);
 			}
-			if(aP12.t2 != null) {
+			if(aP12.t2 != null && aP12.t2.kind != Token.NSTOKEN_KIND.MARK) {
 				aFused.tokens.add(aP12.t2);
 			}
 		}
