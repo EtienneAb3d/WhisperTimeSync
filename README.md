@@ -13,6 +13,9 @@ https://github.com/EtienneAb3d/WhisperHallu
 WhisperTimeSync and WhisperHallu are used to extract vocals and lyrics in karaok-AI:<br/>
 https://github.com/EtienneAb3d/karaok-AI
 
+ChatMate is a complete versatile ChatGPT automation tool, including explanations to produce a SRT file translator to Chinese (as an example):<br/>
+https://github.com/EtienneAb3d/ChatMate
+
 # Google Colab
 
 https://colab.research.google.com/drive/10r4m_GaTwU-JQMkRe9T0cvgrfQH1le31?usp=sharing
