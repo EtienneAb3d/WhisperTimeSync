@@ -1,6 +1,10 @@
 # WhisperTimeSync
 Synchronize Whisper's timestamps over an existing accurate transcription
 
+<b>Input 1:</b> SRT with good timestamps and bad-quality text<br/>
+<b>Input 2:</b> good text-only, or SRT with good text and bad timestamps<br/>
+<b>Output:</b> SRT with good text and good timestamps
+
 # Complement
 
 The "accurate transcriptions" may be obtained using WhisperHallu:<br/>
@@ -8,6 +12,9 @@ https://github.com/EtienneAb3d/WhisperHallu
 
 WhisperTimeSync and WhisperHallu are used to extract vocals and lyrics in karaok-AI:<br/>
 https://github.com/EtienneAb3d/karaok-AI
+
+ChatMate is a complete versatile ChatGPT automation tool, including explanations to produce a SRT file translator to Chinese (as an example):<br/>
+https://github.com/EtienneAb3d/ChatMate
 
 # Google Colab
 
