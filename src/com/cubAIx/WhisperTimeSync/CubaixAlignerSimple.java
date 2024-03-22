@@ -7,6 +7,13 @@ public class CubaixAlignerSimple {
 
 	static double COST_INCREDIBLE = 1000000;
 	
+	boolean ignoreCase = false;
+	double compressPosFactor = 
+			//0;
+			1.0/100000.0;
+	public CubaixAlignerSimple(boolean aIgnoreCase) {
+		ignoreCase = aIgnoreCase;
+	}
 	public TokenizedSent syncMarks1to2(TokenizedSent aTS1,TokenizedSent aTS2) throws Exception {
 		Vector<Pair> aP12s = align(aTS1, aTS2);
 		TokenizedSent aFused = new TokenizedSent(null);
@@ -96,22 +103,32 @@ public class CubaixAlignerSimple {
 		if(aT1.kind != aT2.kind) {
 			return COST_INCREDIBLE;
 		}
-		if(aT1.token.equals(aT2.token)) {
-			return 0;
+		if(aT1.token.equals(aT2.token)
+				|| (ignoreCase && aT1.token.equalsIgnoreCase(aT2.token))) {
+			return 0
+					+(aT1.tokPos+aT2.tokPos)*compressPosFactor;
 		}
 		if(aT1.token.equalsIgnoreCase(aT2.token)) {
-			return 0.01;
+			return 0.01
+					+(aT1.tokPos+aT2.tokPos)*compressPosFactor;
 		}
 		if(aT1.token.trim().equalsIgnoreCase(aT2.token.trim())) {
-			return 0.02;
+			return 0.02
+					+(aT1.tokPos+aT2.tokPos)*compressPosFactor;
 		}
-		if(aT1.token.toLowerCase().startsWith(aT2.token.toLowerCase())
-				|| aT1.token.toLowerCase().endsWith(aT2.token.toLowerCase())
-				|| aT2.token.toLowerCase().startsWith(aT1.token.toLowerCase())
-				|| aT2.token.toLowerCase().endsWith(aT1.token.toLowerCase())) {//Segmentation problem ?
-			return 1.0 - 2.0*Math.min(aT1.token.length(),aT2.token.length())/(double)(aT1.token.length()+aT2.token.length());
+		String aT1LC = aT1.tokenLC();
+		String aT2LC = aT2.tokenLC();
+		if(aT1LC.startsWith(aT2LC)
+				|| aT1LC.endsWith(aT2.token.toLowerCase())
+				|| aT2LC.startsWith(aT1LC)
+				|| aT2LC.endsWith(aT1LC)
+				|| (aT1LC.length() > 2 && aT2LC.length() > 2 && 
+						(aT1LC.indexOf(aT2LC) >= 0 || aT2LC.indexOf(aT1LC) >= 0))) {//Segmentation problem ?
+			return 1.0 - 2.0*Math.min(aT1.token.length(),aT2.token.length())/(double)(aT1.token.length()+aT2.token.length())
+					+(aT1.tokPos+aT2.tokPos)*compressPosFactor;
 		}
-		return 2.0 - 2.0*Math.min(aT1.token.length(),aT2.token.length())/(double)(aT1.token.length()+aT2.token.length());
+		return 2.0 - 2.0*Math.min(aT1.token.length(),aT2.token.length())/(double)(aT1.token.length()+aT2.token.length())
+				+(aT1.tokPos+aT2.tokPos)*compressPosFactor;
 	}
 	
 	double cost(Token aT) {

@@ -5,8 +5,16 @@ public class Token {
 
 	public NSTOKEN_KIND kind = NSTOKEN_KIND.UNDEF;
 	public String token = null;
+	private String tokenLC = null;
 	public int charPos = -1;
 	public int tokPos = -1;
+
+	public final String tokenLC() {
+		if(tokenLC != null) {
+			return tokenLC;
+		}
+		return tokenLC = token.toLowerCase();
+	}
 	
 	public String getAttr(String aAttr) {
 		if(kind != NSTOKEN_KIND.MARK) {

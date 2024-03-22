@@ -73,7 +73,9 @@ public class WhisperTimeSync {
 		TokenizedSent aSrtTS = aTokenizer.tokenizeXmlSimple(aSrtXml,aCutOnRE); 
 		TokenizedSent aTxtTS = aTokenizer.tokenizeXmlSimple(aTxtXml,aCutOnRE);
 
-		CubaixAlignerSimple aAligner = new CubaixAlignerSimple();
+		CubaixAlignerSimple aAligner = new CubaixAlignerSimple(
+				true//aIgnoreCase
+				);
 		TokenizedSent aSyncTS = aAligner.syncMarks1to2(aSrtTS, aTxtTS);
 
 		StringBuffer aOut = new StringBuffer();
@@ -86,6 +88,7 @@ public class WhisperTimeSync {
 					String aPhrase = aWaiting.toString()
 							.replaceAll("&lt;", "<")
 							.replaceAll("&gt;", ">")
+							.replaceAll("\n", "<BR/>")
 							.trim()+"\n\n";
 					aOut.append(aPhrase);
 					if(_DEBUG_ALIGN) {
@@ -105,6 +108,7 @@ public class WhisperTimeSync {
 			String aPhrase = aWaiting.toString()
 					.replaceAll("&lt;", "<")
 					.replaceAll("&gt;", ">")
+					.replaceAll("\n", "<BR/>")
 					.trim()+"\n\n";
 			aOut.append(aPhrase);
 			if(_DEBUG_ALIGN) {
